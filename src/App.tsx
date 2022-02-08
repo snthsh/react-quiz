@@ -11,13 +11,7 @@ import Score from './components/screens/Score';
 //Utils
 import { sortArray } from './utils';
 //Types
-import {
-  QuizData,
-  Question,
-  Activity,
-  AnswerObject,
-  Screen,
-} from './types/Types';
+import { QuizData, Question, Screen } from './types/Types';
 
 const App = () => {
   const [screen, setScreen] = useState<Screen>('HOME');

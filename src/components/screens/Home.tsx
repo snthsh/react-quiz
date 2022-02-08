@@ -3,7 +3,7 @@ import { capitalize } from '../../utils';
 //Styles
 import { Wrapper } from './Home.styles';
 //Types
-import { Question, Activity } from '../../types/Types';
+import { Activity } from '../../types/Types';
 
 type Props = {
   heading: string;
@@ -22,6 +22,7 @@ const HomeScreen: React.FC<Props> = ({
       {activities &&
         activities.map((activity: Activity) => (
           <li key={activity.activity_name}>
+            // eslint-disable-next-line
             <a
               href={'#'}
               onClick={selectActivity}
