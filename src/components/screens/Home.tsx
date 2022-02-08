@@ -22,7 +22,7 @@ const HomeScreen: React.FC<Props> = ({
       {activities &&
         activities.map((activity: Activity) => (
           <li key={activity.activity_name}>
-            // eslint-disable-next-line
+            {/* eslint-disable-next-line */}
             <a
               href={'#'}
               onClick={selectActivity}
