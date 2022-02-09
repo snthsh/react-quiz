@@ -31,18 +31,15 @@ const App = () => {
     setLoading(true);
     setGameOver(false);
 
-    fetch(
-      'https://s3.eu-west-2.amazonaws.com/interview.mock.data/payload.json',
-      {
-        method: 'GET',
-        mode: 'cors',
-        headers: {
-          'Access-Control-Allow-Methods': 'GET',
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-      }
-    )
+    fetch('/interview.mock.data/payload.json', {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Access-Control-Allow-Methods': 'GET',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    })
       .then((res) => {
         return res.json();
       })
