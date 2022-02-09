@@ -111,7 +111,6 @@ const App = () => {
     <>
       <GlobalStyle />
       {loading && <span>Loading...</span>}
-
       {screen === 'HOME' && (
         <Home
           heading={heading}
@@ -119,7 +118,6 @@ const App = () => {
           selectActivity={selectActivity}
         />
       )}
-
       {screen === 'QUESTION' && (
         <Questions
           activity={activity}
@@ -129,7 +127,6 @@ const App = () => {
           buttonsArray={BUTTONS_ARRAY}
         />
       )}
-
       {screen === 'SCORE' && (
         <Score
           activity={activity}
