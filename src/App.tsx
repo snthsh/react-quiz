@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
+import axios from 'axios';
 //Constants
 import { BUTTONS_ARRAY, TOTAL_QUESTIONS, API_URL } from './constants';
 //Styles
@@ -30,13 +31,18 @@ const App = () => {
     setLoading(true);
     setGameOver(false);
 
-    fetch(API_URL, {
-      method: 'GET',
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    })
+    fetch(
+      'https://s3.eu-west-2.amazonaws.com/interview.mock.data/payload.json',
+      {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          'Access-Control-Allow-Methods': 'GET',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      }
+    )
       .then((res) => {
         return res.json();
       })
