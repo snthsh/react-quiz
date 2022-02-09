@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
-import axios from 'axios';
 //Constants
-import { BUTTONS_ARRAY, TOTAL_QUESTIONS, API_URL } from './constants';
+import { BUTTONS_ARRAY, TOTAL_QUESTIONS } from './constants';
 //Styles
 import { GlobalStyle } from './App.styles';
 //Components
@@ -12,7 +11,13 @@ import Score from './components/screens/Score';
 //Utils
 import { sortArray } from './utils';
 //Types
-import { QuizData, Question, Screen } from './types/Types';
+import {
+  QuizData,
+  Question,
+  Activity,
+  AnswerObject,
+  Screen,
+} from './types/Types';
 
 const App = () => {
   const [screen, setScreen] = useState<Screen>('HOME');
@@ -31,15 +36,7 @@ const App = () => {
     setLoading(true);
     setGameOver(false);
 
-    fetch('/interview.mock.data/payload.json', {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Access-Control-Allow-Methods': 'GET',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-    })
+    fetch('/interview.mock.data/payload.json')
       .then((res) => {
         return res.json();
       })
@@ -52,14 +49,20 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    // console.log('number--->', number);
+    // console.log('userAnswers.length--->', userAnswers.length);
     if (!gameOver && userAnswers.length === TOTAL_QUESTIONS) {
       setScreen('SCORE');
       setGameOver(true);
     }
   }, [userAnswers, gameOver]);
+  //console.log('screen--->', screen);
 
   //restrict all handleClicks to be exclusively on HTMLButton elements
   const checkAnswer = (event: React.MouseEvent<HTMLButtonElement>) => {
+    // console.log('event.currentTarget.value--->');
+    // console.log(event.currentTarget.value);
+    console.log('checking answernow-->');
     if (!gameOver) {
       //user answer
       const answer = event.currentTarget.value === 'CORRECT' ? true : false;
@@ -72,9 +75,13 @@ const App = () => {
         correct,
         correct_answer: questions[number].feedback,
       };
+      console.log('answerObject--->');
+      console.log({ ...answerObject });
       //save answer in the array for user user answers
       //@ts-ignore
       setUserAnswers((prev) => {
+        console.log('setUserAnswers--->');
+        console.log(prev.concat([answerObject]));
         return prev.concat([answerObject]);
       });
       setNumber(number + 1);
@@ -82,6 +89,7 @@ const App = () => {
   };
 
   const getQuestions = () => {
+    console.log('quizData--->', quizData);
     const activityArray = _.filter(quizData.activities, {
       activity_name: activity,
     });
@@ -92,6 +100,8 @@ const App = () => {
 
   const selectActivity = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
+    // console.log('event.selectActivity--->');
+    // console.log(event.currentTarget.textContent);
     const selectedActivity = event.currentTarget.textContent || null;
     if (!gameOver) {
       setActivity(selectedActivity);
@@ -99,6 +109,8 @@ const App = () => {
       setQuestions(questions);
       setNumber(number);
       setScreen('QUESTION');
+      console.log('selected activity questions --->');
+      console.log(getQuestions());
     }
   };
 
@@ -114,6 +126,7 @@ const App = () => {
     <>
       <GlobalStyle />
       {loading && <span>Loading...</span>}
+
       {screen === 'HOME' && (
         <Home
           heading={heading}
@@ -121,6 +134,8 @@ const App = () => {
           selectActivity={selectActivity}
         />
       )}
+      {/* {console.log('selectedActivity-->', activity)} */}
+
       {screen === 'QUESTION' && (
         <Questions
           activity={activity}
@@ -130,6 +145,8 @@ const App = () => {
           buttonsArray={BUTTONS_ARRAY}
         />
       )}
+
+      {/* {console.log('userAnswers--->', userAnswers)} */}
       {screen === 'SCORE' && (
         <Score
           activity={activity}
