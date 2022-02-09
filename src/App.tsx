@@ -33,7 +33,7 @@ const App = () => {
     fetch(API_URL, {
       method: 'GET',
       headers: {
-        'access-control-allow-origin': '*',
+        'Access-Control-Allow-Origin': '*',
         'Content-type': 'application/json; charset=UTF-8',
       },
     })
